@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Guriyaaaa..</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fff9c4, #ffdef2);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            color: #5d4037;
+        }
+        
+        /* Password Modal */
+        .password-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff9c4;
+            display: flex; justify-content: center; align-items: center; z-index: 100;
+            opacity: 1; transition: opacity 0.5s ease;
+        }
+        
+        .password-content {
+            background: white; padding: 40px; border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); text-align: center;
+            max-width: 400px; width: 90%;
+        }
+        
+        .password-input {
+            width: 100%; padding: 15px; border: 2px solid #ffe082;
+            border-radius: 15px; margin-bottom: 20px; text-align: center;
+            font-size: 18px; outline: none;
+        }
+
+        .password-input:focus { border-color: #ffd54f; }
+        
+        .submit-btn {
+            background: #ffd54f; color: #5d4037; border: none;
+            padding: 15px 30px; border-radius: 15px; cursor: pointer; 
+            width: 100%; font-size: 18px; font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .submit-btn:hover { transform: scale(1.05); background: #ffca28; }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #fff9c4, #ffdef2);
+            display: none; justify-content: center; align-items: center; z-index: 99;
+        }
+        
+        .welcome-message {
+            font-family: 'Dancing Script', cursive; font-size: 50px; color: #795548;
+            text-align: center; animation: pulse 2s infinite;
+        }
+        
+        /* Main UI */
+        .container { width: 100%; max-width: 900px; padding: 20px; margin-top: 20px; }
+        
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        
+        .tab {
+            background: rgba(255, 255, 255, 0.6); border: none; padding: 12px 25px;
+            border-radius: 50px; cursor: pointer; font-weight: 600; color: #795548;
+            transition: 0.3s;
+        }
+        
+        .tab.active { background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transform: translateY(-3px); }
+        
+        .content-area {
+            background: white; border-radius: 30px; padding: 30px;
+            min-height: 500px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-content { display: none; animation: fadeIn 0.6s ease; }
+        .tab-content.active { display: block; }
+
+        /* Letter Section */
+        .letter { padding: 25px; background: #fffde7; border: 2px dashed #ffe082; border-radius: 20px; cursor: pointer; }
+        .letter-content { 
+            max-height: 0; 
+            overflow: hidden; 
+            transition: 0.8s; 
+            line-height: 1.6; 
+            font-size: 18px; 
+            color: #5d4037;
+            text-align: center;
+        }
+        .letter.expanded .letter-content { max-height: 2500px; margin-top: 20px; }
+
+        /* Music */
+        .song-card {
+            background: #fffde7; padding: 20px; border-radius: 20px;
+            margin-bottom: 15px; display: flex; justify-content: space-between;
+            align-items: center; border: 1px solid #ffe082;
+        }
+        .heart-btn { background: #ffd54f; color: #5d4037; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+
+        /* Gallery */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .gallery-item { border-radius: 20px; overflow: hidden; height: 300px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 5px solid white; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item img:hover { transform: scale(1.1); }
+
+        /* Notes */
+        .note { background: #fffde7; padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 6px solid #ffd54f; font-size: 18px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        .floating-heart {
+            position: fixed; bottom: -50px; font-size: 25px;
+            pointer-events: none; z-index: 1000; animation: floatUp 4s linear forwards;
+        }
+        @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-content">
+            <h2 style="font-family: 'Dancing Script'; font-size: 35px; margin-bottom: 20px; color: #795548;">Hello Guriyaaaa.. 🎀</h2>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Enter secret word...">
+            <button class="submit-btn" id="submitPassword">Unlock My Heart 💛</button>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <h1 class="welcome-message">Welcome My Home, Guriyaaaa.. 😭💛</h1>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContent" style="display: none;">
+        <div class="tabs">
+            <button class="tab active" data-tab="letter-tab">💛 For Uhhh</button>
+            <button class="tab" data-tab="music-tab">🎵 Our Sukoon</button>
+            <button class="tab" data-tab="notes-tab">📝 Reminders</button>
+            <button class="tab" data-tab="gallery-tab">🖼️ Gallery</button>
+        </div>
+
+        <div class="content-area">
+            <!-- Tab: Letter -->
+            <div class="tab-content active" id="letter-tab">
+                <div class="letter" id="loveLetter">
+                    <h3 style="font-family: 'Dancing Script'; font-size: 30px; color: #795548; text-align: center;">Open it Meri Jaaaaaaaan ✉️🌻</h3>
+                    <div class="letter-content">
+                        💖 Meri Jaaaaaaaaan 😭💛💖💍<br>
+                        Uhhhh are the best partner ever 🥺💛<br>
+                        Uhhhh are so beautiful, so adorable,<br>
+                        soooo gorgeous — MashAllah 🫠💐💛🎀<br>
+                        Uhhhh make me feel so happy<br>
+                        and full of life 🥺💛<br>
+                        Being with uhhh is everything 👀💛<br>
+                        Uhhh will always be my safest place 🌸💛<br>
+                        My home 😭💛<br>
+                        I promise to always love uhhh 🎀💛<br>
+                        Care for you 🫂🌍💛<br>
+                        And bring you all the happiness you deserve 💛😭<br><br>
+                        Uhhhh know meri jaaaaaaaaan 🥺<br>
+                        Uhhhh are my sukooooon 💛🫠😩🎀<br>
+                        ✨ Sukoooon means uhhhh 👀💛 ✨<br><br>
+                        Tery har lafz mein sukoon hai 🫠<br>
+                        Teri hasi mein sukoon hai 😩💛<br>
+                        Tujhy dekh loon to hai sukoon 🎀<br>
+                        Tujhy chu loon to hai sukoon 💞<br>
+                        Teri tasveer mein hai sukoon 💐<br>
+                        Tery naam mein hai sukoon 💗<br><br>
+                        💛 Meri jaan, tu hai to sukoon hai<br>
+                        🎀 Mery paas hai to sukoon hai<br>
+                        🌍 Mery sath hai to sukoon hai<br>
+                        😭💛 Tu hai to sukoon hai<br>
+                        🥺💘💛 Tu hai to sukoon hai
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Music -->
+            <div class="tab-content" id="music-tab">
+                <h2 style="margin-bottom: 20px; color: #795548;">Listen with Love 😭💛</h2>
+                <div class="song-card">
+                    <span>Meri Zindagi Hai Tu</span>
+                    <audio id="s1"><source src="Meri Zindagi Hai Tu.mp3" type="audio/mpeg"></audio>
+                    <button class="heart-btn" onclick="togglePlay('s1', this)">🌻 Play</button>
+                </div>
+                <div class="song-card">
+                    <span>Khat | Navjot Ahuja</span>
+                    <audio id="s2"><source src="Khat.mp3" type="audio/mpeg"></audio>
+                    <button class="heart-btn" onclick="togglePlay('s2', this)">🌻 Play</button>
+                </div>
+                <div class="song-card">
+                    <span>Tum Ho Toh</span>
+                    <audio id="s3"><source src="Tum Ho Toh.mp3" type="audio/mpeg"></audio>
+                    <button class="heart-btn" onclick="togglePlay('s3', this)">🌻 Play</button>
+                </div>
+            </div>
+
+            <!-- Tab: Notes -->
+            <div class="tab-content" id="notes-tab">
+                <h2 style="margin-bottom: 20px; color: #795548;">Reminders for Guriyaaaa..</h2>
+                <div class="note">Teri hasi mein sukoon hai 🥺💛</div>
+                <div class="note">Tujhy chu loon to hai sukoon 💞 </div>
+                <div class="note">Tujhy dekh loon to hai sukoon 🎀💍</div>
+                <div class="note">Teri tasveer mein hai sukoon 💐</div>
+            </div>
+
+            <!-- Tab: Gallery -->
+            <div class="tab-content" id="gallery-tab">
+                <h2 style="margin-bottom: 20px; color: #795548;">MashAllah 💐💛🎀</h2>
+                <div class="gallery">
+                    <div class="gallery-item"><img src="1.jpg"></div>
+                    <div class="gallery-item"><img src="2.jpg"></div>
+                    <div class="gallery-item"><img src="3.jpg"></div>
+                    <div class="gallery-item"><img src="4.jpg"></div>
+                    <div class="gallery-item"><img src="5.jpg"></div>
+                    <div class="gallery-item"><img src="6.jpg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password Logic
+        const submitBtn = document.getElementById('submitPassword');
+        const passwordInput = document.getElementById('passwordInput');
+
+        submitBtn.addEventListener('click', function() {
+            const pass = passwordInput.value.toLowerCase().trim();
+            if(pass === 'meri jaan') {
+                document.getElementById('passwordModal').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('passwordModal').style.display = 'none';
+                    document.getElementById('welcomeScreen').style.display = 'flex';
+                    setTimeout(() => {
+                        document.getElementById('welcomeScreen').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('welcomeScreen').style.display = 'none';
+                            document.getElementById('mainContent').style.display = 'block';
+                        }, 800);
+                    }, 2000);
+                }, 500);
+            } else {
+                alert("Galat Password hai meri jaan! 🥺");
+                passwordInput.value = "";
+            }
+        });
+
+        // Tab Logic
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Letter Expand
+        document.getElementById('loveLetter').addEventListener('click', function() {
+            this.classList.toggle('expanded');
+        });
+
+        // Audio Logic
+        let heartInterval;
+        function togglePlay(id, btn) {
+            const audio = document.getElementById(id);
+            if(audio.paused) {
+                document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime=0; });
+                document.querySelectorAll('.heart-btn').forEach(b => b.innerHTML = "🌻 Play");
+                audio.play();
+                btn.innerHTML = "🫠 Pause";
+                startHearts();
+            } else {
+                audio.pause();
+                btn.innerHTML = "🌻 Play";
+                stopHearts();
+            }
+        }
+
+        function startHearts() {
+            if(!heartInterval) {
+                heartInterval = setInterval(() => {
+                    const h = document.createElement("div");
+                    h.classList.add("floating-heart");
+                    h.innerHTML = ["💛", "😭", "💍", "🎀", "🫠", "🫂"][Math.floor(Math.random() * 6)];
+                    h.style.left = Math.random() * 100 + "vw";
+                    document.body.appendChild(h);
+                    setTimeout(() => h.remove(), 4000);
+                }, 300);
+            }
+        }
+
+        function stopHearts() {
+            clearInterval(heartInterval);
+            heartInterval = null;
+        }
+    </script>
+</body>
+</html>
